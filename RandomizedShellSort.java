@@ -23,7 +23,7 @@ public class RandomizedShellSort {
     // compare-exchange two regions of length offset each
     public static void compareRegions(int[] a, int s, int t, int offset) {
         int mate[] = new int[offset]; // index offset array
-        for (int count = 0; count < C; count++) { // do C region compare-exchanges 20
+        for (int count = 0; count < C; count++) { // do C region compare-exchanges
             for (int i = 0; i < offset; i++)
                 mate[i] = i;
             permuteRandom(mate); // comment this out to get a deterministic Shellsort

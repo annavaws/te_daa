@@ -8,15 +8,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // int[] sizes = { 512 };
         int[] sizes = { 512, 8192, 65536 };
-        // String[] orders = { "random" };
         String[] orders = { "sorted", "random", "reversed" };
         String path = "dataset_";
         for (int size : sizes) {
             for (String order : orders) {
                 path += size + "_" + order + ".txt";
                 int[] dataset = readDataset(path);
+                int[] dataset1 = dataset.clone();
                 int[] dataset2 = dataset.clone();
                 path = "dataset_";
                 
@@ -25,31 +24,30 @@ public class Main {
                 long startTime = System.nanoTime();
                 long startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
-                MaxHeapSort.heapSort(dataset);
+                MaxHeapSort.heapSort(dataset1);
 
                 long endTime = System.nanoTime();
-                System.gc();
                 long endMemory =Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 long duration = endTime - startTime;
                 double msDuration = (double) duration / 1000000;
                 long usedMemory = endMemory - startMemory;
-                System.out.println(outputMessage("Heap", order, size, msDuration, usedMemory));
-                checkSorted(dataset);
+                System.out.println(outputMessage("Max Heap", order, size, msDuration, usedMemory));
+                checkSorted(dataset1);
                 
                 // Garbage Collector
-                // System.gc();
+                System.gc();
 
-                // long startTime2 = System.nanoTime();
-                // long startMemory2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                long startTime2 = System.nanoTime();
+                long startMemory2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
-                // RandomizedShellSort.randomizedShellSort(dataset2);
+                RandomizedShellSort.randomizedShellSort(dataset2);
 
-                // long endTime2 = System.nanoTime();
-                // long endMemory2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-                // long duration2 = endTime2 - startTime2;
-                // double msDuration2 = (double) duration2 / 1000000;
-                // long usedMemory2 = endMemory2 - startMemory2;
-                // System.out.println(outputMessage("Randomized Shell", order, size, msDuration2, usedMemory2));
+                long endTime2 = System.nanoTime();
+                long endMemory2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                long duration2 = endTime2 - startTime2;
+                double msDuration2 = (double) duration2 / 1000000;
+                long usedMemory2 = endMemory2 - startMemory2;
+                System.out.println(outputMessage("Randomized Shell", order, size, msDuration2, usedMemory2));
                 
             }
         }
